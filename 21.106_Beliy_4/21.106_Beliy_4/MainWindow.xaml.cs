@@ -29,17 +29,25 @@ namespace _21._106_Beliy_4
 
         private void buttonSerch_Click(object sender, RoutedEventArgs e)
         {
-            using ( var db = new Entities())
+            try
             {
-                db.Speciality.Load();
-                List<Group> result =new List<Group>();
-                result = db.Group.Where(o => o.Speciality.Title == "15.02.09 Аддитивные технологии")
-                    .OrderByDescending(g => g.Title).ToList();
-                LoadDate.ItemsSource=result;
-                if (result.Count == 0)
+
+                using (var db = new Entities())
                 {
-                    labelError.Content = "Записи отсутствуют";
+                    db.Speciality.Load();
+                    List<Group> result = new List<Group>();
+                    result = db.Group.Where(o => o.Speciality.Title == "15.02.09 Аддитивные технологии")
+                        .OrderByDescending(g => g.Title).ToList();
+                    LoadDate.ItemsSource = result;
+                    if (result.Count == 0)
+                    {
+                        labelError.Content = "Записи отсутствуют";
+                    }
                 }
+            }
+            catch
+            {
+
             }
         }
     }
